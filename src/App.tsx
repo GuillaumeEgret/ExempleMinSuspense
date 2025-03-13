@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { CompoSuspendu } from './CompoSuspendu';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient()
 
 function App() {
+  const [isClicked, setIsClicked] = useState(false)
+  
   return (
     <div className="App">
       <header className="App-header">
@@ -10,14 +16,10 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <QueryClientProvider client={queryClient}>
+          <button onClick={() => setIsClicked(!isClicked)}>Cliquer moi</button>
+            {isClicked ? <CompoSuspendu /> : <div>Nothing to see</div>}
+        </QueryClientProvider>
       </header>
     </div>
   );
